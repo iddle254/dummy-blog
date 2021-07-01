@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-
-class CreatePostsTable extends Migration
+class CreateUsersPermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +13,14 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
+        Schema::create('permission_user', function (Blueprint $table) {
             $table->unsignedBigInteger('user_id');
-            $table->string('title');
-            $table->text('post_image')->nullable();
-            $table->text('body');
-            $table->timestamps();
+            $table->unsignedBigInteger('permission_id');
+            
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -33,6 +31,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('permission_user');
     }
 }
